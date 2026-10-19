@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WiFi Warn — 连上指定 WiFi，自动拦掉分心 App</title>
+<meta name="description" content="WiFi Warn：无需 Root，连上指定 WiFi（家/自习室）自动进入自律模式，打开分心 App 立刻弹出全屏警告。源码 MIT 开源，成品 APK 开箱即用。">
+<meta property="og:title" content="WiFi Warn — 自律，从连上 WiFi 那一刻开始">
+<meta property="og:description" content="不用 Root。连上指定 WiFi 自动拦截分心 App。源码 MIT 开源。">
+<meta property="og:type" content="website">
+<style>
+:root{--bg:#0b0f14;--card:#131a22;--line:#1f2a36;--fg:#e6edf3;--dim:#8b98a5;--acc:#3ddc97;--warn:#ff5c5c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+header{padding:64px 0 40px;text-align:center}
+.badge{display:inline-block;font-size:13px;color:var(--acc);border:1px solid var(--acc);border-radius:999px;padding:2px 12px;margin-bottom:18px}
+h1{font-size:34px;line-height:1.35;letter-spacing:-.02em}
+h1 span{color:var(--acc)}
+.sub{color:var(--dim);margin-top:14px;font-size:17px}
+.actions{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 22px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px}
+.btn-p{background:var(--acc);color:#06130d}
+.btn-s{border:1px solid var(--line);color:var(--fg)}
+.btn-s:hover{border-color:var(--acc);color:var(--acc)}
+section{padding:36px 0;border-top:1px solid var(--line)}
+h2{font-size:20px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.card h3{font-size:16px;margin-bottom:8px}
+.card p{color:var(--dim);font-size:14.5px}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.plan{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column}
+.plan.hot{border-color:var(--acc)}
+.plan .tag{font-size:12px;color:var(--acc);margin-bottom:6px;letter-spacing:.04em}
+.plan .amt{font-size:26px;font-weight:700;margin:6px 0 10px}
+.plan ul{list-style:none;color:var(--dim);font-size:14.5px;flex:1}
+.plan li{margin:6px 0;padding-left:18px;position:relative}
+.plan li:before{content:"›";position:absolute;left:2px;color:var(--acc)}
+.plan .btn{margin-top:16px;text-align:center}
+code{background:#0f1620;border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-size:13.5px}
+pre{background:#0f1620;border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13.5px}
+footer{padding:40px 0 60px;color:var(--dim);font-size:14px;text-align:center;border-top:1px solid var(--line)}
+a{color:var(--acc)}
+.phone{margin:0 auto;width:220px;border:1px solid var(--line);border-radius:22px;padding:16px;background:var(--card)}
+.mock-warn{background:#1a1113;border:1px solid #401d1d;border-radius:12px;padding:16px;text-align:center}
+.mock-warn .big{color:var(--warn);font-size:15px;font-weight:700;margin-bottom:6px}
+.mock-warn small{color:var(--dim);font-size:12.5px}
+.note{color:var(--dim);font-size:13.5px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="badge">开源 · 无需 Root · 完全本地</div>
+  <h1>连上指定 WiFi，<span>自动拦掉分心 App</span></h1>
+  <p class="sub">WiFi Warn 把「自律」绑到你最熟悉的场景：一到家、一进自习室连上那个 WiFi，抖音、小红书、游戏就会撞上一面全屏警告墙。断开 WiFi 即自动解除。</p>
+  <div class="actions">
+    <a class="btn btn-p" href="https://github.com/weavrikx/wifiwarn/releases/latest">下载 APK（最新版）</a>
+    <a class="btn btn-s" href="https://github.com/weavrikx/wifiwarn">看源码（MIT）</a>
+  </div>
+  <p class="note">Android 8.0+ · 约 5 MB · 不收集任何数据</p>
+</header>
+
+<section>
+  <h2>它怎么工作</h2>
+  <div class="grid">
+    <div class="card"><h3>1. 绑定 WiFi</h3><p>把你「想专注」的 WiFi（家里、图书馆、自习室）加进白名单。</p></div>
+    <div class="card"><h3>2. 连接即自律</h3><p>手机一连上该 WiFi，自律模式自动开启，无需手动切换。</p></div>
+    <div class="card"><h3>3. 拦掉分心 App</h3><p>打开你标记过的 App，立刻弹出全屏警告遮罩，一键回到正事。</p></div>
+    <div class="card"><h3>4. 规则全在本地</h3><p>基于无障碍服务实现，不用 Root，不联网上传，不上报任何使用数据。</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>拦截瞬间</h2>
+  <div class="phone">
+    <div class="mock-warn">
+      <div class="big">⚠ 现在不是刷手机的时候</div>
+      <small>你正在「自习室 WiFi」下<br>把时间留给重要的事</small>
+    </div>
+  </div>
+  <p class="note" style="text-align:center">警告文案、拦截名单都可以自己改；源码在 GitHub，想怎么改都行。</p>
+</section>
+
+<section>
+  <h2>怎么获得</h2>
+  <div class="price">
+    <div class="plan">
+      <div class="tag">免费</div>
+      <div class="amt">¥0</div>
+      <ul>
+        <li>完整源码（MIT 许可，可商用）</li>
+        <li>自行编译 / 自由改动</li>
+        <li>GitHub 上直接取用</li>
+      </ul>
+      <a class="btn btn-s" href="https://github.com/weavrikx/wifiwarn">去 GitHub</a>
+    </div>
+    <div class="plan hot">
+      <div class="tag">推荐 · 省时间</div>
+      <div class="amt">¥9.9</div>
+      <ul>
+        <li>成品 APK，装完即用（免编译）</li>
+        <li>图文配置教程，3 分钟上手</li>
+        <li>后续版本免费更新</li>
+      </ul>
+      <a class="btn btn-p" href="mailto:weavrik@outlook.com?subject=%E8%B4%AD%E4%B9%B0%20WiFi%20Warn%20%E6%88%90%E5%93%81%20APK">邮件获取</a>
+    </div>
+    <div class="plan">
+      <div class="tag">团队 / 个人品牌</div>
+      <div class="amt">¥99 起</div>
+      <ul>
+        <li>换应用名、图标、警告文案</li>
+        <li>预置你的自律规则</li>
+        <li>2–5 天交付，可谈批量</li>
+      </ul>
+      <a class="btn btn-s" href="mailto:weavrik@outlook.com?subject=%E5%93%81%E7%89%8C%E5%AE%9A%E5%88%B6%20WiFi%20Warn">聊聊定制</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>从源码构建</h2>
+  <pre>git clone https://github.com/weavrikx/wifiwarn.git
+cd wifiwarn
+./gradlew assembleDebug        # JDK 17 + Android SDK 34，产出 app/build/outputs/apk/debug/</pre>
+  <p class="note">没有 Android Studio 也能编译：仓库内已含 gradle wrapper；CI 构建方法见下方技术文章。</p>
+</section>
+
+<section>
+  <h2>技术文章</h2>
+  <div class="grid">
+    <div class="card"><h3><a href="https://dev.to/weavrikx/getting-the-current-foreground-app-on-android-without-root-accessibilityservice-22jj">无 Root 获取前台 App</a></h3><p>用 AccessibilityService 拿到当前前台应用，零 Root。</p></div>
+    <div class="card"><h3><a href="https://dev.to/weavrikx/android-12-returns-for-wifi-ssid-the-permission-fix-fh4">Android 12+ 读到 &lt;unknown ssid&gt;</a></h3><p>WiFi SSID 权限修复，一行代码的坑。</p></div>
+    <div class="card"><h3><a href="https://dev.to/weavrikx/no-android-studio-build-apks-in-github-actions-and-verify-them-on-real-hardware-bc0">不用 Android Studio 出 APK</a></h3><p>GitHub Actions 构建 + 真机验证。</p></div>
+  </div>
+</section>
+
+<footer>
+  <p>联系：<a href="mailto:weavrik@outlook.com">weavrik@outlook.com</a> · <a href="https://github.com/weavrikx">GitHub @weavrikx</a> · <a href="https://dev.to/weavrikx">dev.to</a></p>
+  <p style="margin-top:10px">源码以 MIT 许可开源 · 成品与定制定价如页面所示</p>
+</footer>
+
+</div>
+</body>
+</html>
