@@ -47,6 +47,10 @@ a{color:var(--acc)}
 .mock-warn .big{color:var(--warn);font-size:15px;font-weight:700;margin-bottom:6px}
 .mock-warn small{color:var(--dim);font-size:12.5px}
 .note{color:var(--dim);font-size:13.5px;margin-top:10px}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;align-items:start}
+.shots figure{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center;margin:0}
+.shots img{width:100%;border-radius:10px;display:block;border:1px solid #0a0d11}
+.shots figcaption{color:var(--dim);font-size:13px;margin-top:9px}
 .qr{width:190px;height:190px;display:block;margin:6px auto 4px;border-radius:12px;background:#fff;padding:8px}
 .qrhint{font-size:13px;line-height:1.65;color:#8b95a5;text-align:center;margin-top:6px}
 </style>
@@ -76,14 +80,13 @@ a{color:var(--acc)}
 </section>
 
 <section>
-  <h2>拦截瞬间</h2>
-  <div class="phone">
-    <div class="mock-warn">
-      <div class="big">⚠ 现在不是刷手机的时候</div>
-      <small>你正在「自习室 WiFi」下<br>把时间留给重要的事</small>
-    </div>
+  <h2>拦截瞬间（真机截图）</h2>
+  <div class="shots">
+    <figure><img src="shots/warning.png" alt="打开分心 App 时弹出的警告"><figcaption>连上目标 WiFi 后打开「小红书」，立刻弹出警告</figcaption></figure>
+    <figure><img src="shots/home.png" alt="WiFi 哨兵主界面"><figcaption>总开关、警告方式（通知 / 悬浮窗）</figcaption></figure>
+    <figure><img src="shots/rules.png" alt="绑定 WiFi 与拦截名单"><figcaption>绑定 WiFi + 挑选要拦的 App</figcaption></figure>
   </div>
-  <p class="note" style="text-align:center">警告文案、拦截名单都可以自己改；源码在 GitHub，想怎么改都行。</p>
+  <p class="note" style="text-align:center">以上均为真机实拍（华为 JLG-AN00 / Android 12）。警告文案、拦截名单都可以自己改；源码在 GitHub，想怎么改都行。</p>
 </section>
 
 <section>
